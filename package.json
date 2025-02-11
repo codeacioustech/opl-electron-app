@@ -1,13 +1,16 @@
 {
-	"name": "opl-digikey-app",
+	"name": "opl-electron-app",
 	"version": "1.1.0",
 	"main": "main.js",
-	"description": "OPL Digikey Desktop App",
-	"author": "Rander Robin",
+	"description": "OPL Desktop App",
+	"author": {
+		"name": "Rander Robin",
+		"email": "rander.robin@opl.digikey.com"
+	},
 	"license": "ISC",
 	"keywords": [
 		"OPL",
-		"Digikey",
+		"Electron",
 		"Desktop"
 	],
 	"scripts": {
@@ -16,18 +19,18 @@
 		"dist": "electron-builder --publish never"
 	},
 	"dependencies": {
-		"electron": "^34.1.1",
 		"electron-store": "^10.0.1",
 		"electron-updater": "^6.3.9",
 		"jquery": "^3.7.1",
 		"node-fetch": "^3.3.2"
 	},
 	"devDependencies": {
+		"electron": "^34.1.1",
 		"electron-builder": "^25.1.8"
 	},
 	"build": {
-		"appId": "com.opl.digikey",
-		"productName": "OPL Digikey App",
+		"appId": "com.opl.desktop",
+		"productName": "OPL Desktop App",
 		"directories": {
 			"output": "dist"
 		},
@@ -38,21 +41,21 @@
 		],
 		"win": {
 			"target": "nsis",
-			"icon": "assets/icon.ico"
+			"icon": "assets/scraping.ico"
 		},
 		"mac": {
 			"target": "dmg",
-			"icon": "assets/icon.icns"
+			"icon": "assets/scraping.icns"
 		},
 		"linux": {
-			"target": "AppImage",
-			"icon": "assets/icon.png"
+			"target": ["AppImage", "deb"],
+			"icon": "assets/scraping.png"
 		},
 		"publish": [
 			{
 				"provider": "github",
 				"owner": "codeacioustech",
-				"repo": "opl-digikey-app"
+				"repo": "opl-electron-app"
 			}
 		]
 	}

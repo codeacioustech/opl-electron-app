@@ -5,7 +5,7 @@ let mainWindow = null
 
 const createMainWindow = async () => {
 	mainWindow = new BrowserWindow({
-		title: 'OPL Digikey Scraper',
+		title: 'OPL Scraper Desktop App',
 		webPreferences: {
 			preload: path.join(path.dirname(path.dirname(__dirname)), 'preload.js'),
 			contextIsolation: true,

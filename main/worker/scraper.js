@@ -3,6 +3,7 @@ const {site} = require('../../endpoint.js');
 const {getCategory, updateCategory} = require('../service/category.js');
 const {updateIp} = require('../service/extension.js');
 const {storage} = require('../storage/storage.js');
+const {openUrl, closeUrl} = require('./window.js')
 
 const startScrape = async () => {
 	await updateIp()
@@ -18,7 +19,6 @@ const startScrape = async () => {
 
 		await storage.set({categoryId: +id, cTitle: title, cState: 'active'})
 
-		const {openUrl} = require('./window.js')
 
 		await openUrl(link.href)
 	} else {
@@ -29,9 +29,11 @@ const startScrape = async () => {
 }
 
 const stopScrape = async () => {
-	const {closeUrl} = require('./window.js')
-
-	await closeUrl()
+	try {
+		await closeUrl()
+	} catch (e) {
+		// Ignore, window was closed already
+	}
 
 	const {categoryId} = await storage.get('categoryId')
 
