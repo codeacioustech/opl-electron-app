@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Digikey Scraper</title>
+	<style>
+		/* General Styles */
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			background-color: #f4f4f4;
+			margin: 0;
+		}
+
+		.container {
+			background: white;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			width: 350px;
+		}
+
+		h1 {
+			color: #333333;
+			margin-bottom: 20px;
+		}
+
+		label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #cccccc;
+			border-radius: 5px;
+			font-size: 16px;
+			box-sizing: border-box;
+		}
+
+		button {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background 0.3s;
+			margin-top: 5px;
+		}
+
+		#btnSave {
+			background: #007bff;
+			color: white;
+		}
+
+		#btnSave:hover {
+			background: #0056b3;
+		}
+
+		#btnStart {
+			background: #28a745;
+			color: white;
+		}
+
+		#btnStart:disabled {
+			background: #cccccc;
+			cursor: not-allowed;
+		}
+
+		#btnStart:hover:enabled {
+			background: #218838;
+		}
+
+		.loader {
+			display: none;
+			margin: 20px auto;
+			width: 50px;
+			height: 50px;
+			border: 5px solid rgba(0, 0, 0, 0.1);
+			border-top: 5px solid #007bff;
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<h1>Hi, <span id="username">Guest</span>!</h1>
+
+	<label for="name">Enter Your Name</label>
+	<input type="text" id="name"/>
+	<button id="btnSave">Save</button>
+
+	<hr>
+
+	<button id="btnStart" disabled>Start Scrape</button>
+	<div class="loader" id="loader"></div>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', async () => {
+		const name = document.getElementById('name');
+		const btnSave = document.getElementById('btnSave');
+		const btnStart = document.getElementById('btnStart');
+		const username = document.getElementById('username');
+		const loader = document.getElementById('loader');
+
+		/** @namespace OPL */
+		const opl = window.OPL;
+
+		// Load saved name
+		const savedName = await opl.getName();
+		if (savedName) {
+			name.value = savedName;
+			username.textContent = savedName;
+			btnStart.removeAttribute('disabled');
+		}
+
+		// Save name
+		btnSave.addEventListener('click', async () => {
+			const value = name.value.trim();
+			if (value) {
+				await opl.setName(value);
+				username.textContent = value;
+				btnStart.removeAttribute('disabled');
+			}
+		});
+
+		// Start Scraping
+		btnStart.addEventListener('click', async () => {
+			// Show loader and disable button
+			loader.style.display = "block";
+			btnStart.disabled = true;
+			btnStart.textContent = "...";
+
+			await opl.startScrape()
+
+			setTimeout(() => {
+				// Hide loader and enable button after scraping
+				loader.style.display = "none";
+				btnStart.removeAttribute("disabled");
+				btnStart.textContent = "Start Scrape";
+			}, 10_000)
+		});
+	});
+</script>
+
+</body>
+</html>

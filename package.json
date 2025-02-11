@@ -1,0 +1,59 @@
+{
+	"name": "opl-digikey-app",
+	"version": "1.1.0",
+	"main": "main.js",
+	"description": "OPL Digikey Desktop App",
+	"author": "Rander Robin",
+	"license": "ISC",
+	"keywords": [
+		"OPL",
+		"Digikey",
+		"Desktop"
+	],
+	"scripts": {
+		"start": "electron .",
+		"build": "electron-builder",
+		"dist": "electron-builder --publish never"
+	},
+	"dependencies": {
+		"electron": "^34.1.1",
+		"electron-store": "^10.0.1",
+		"electron-updater": "^6.3.9",
+		"jquery": "^3.7.1",
+		"node-fetch": "^3.3.2"
+	},
+	"devDependencies": {
+		"electron-builder": "^25.1.8"
+	},
+	"build": {
+		"appId": "com.opl.digikey",
+		"productName": "OPL Digikey App",
+		"directories": {
+			"output": "dist"
+		},
+		"files": [
+			"**/*",
+			"!node_modules/.cache/**",
+			"!dist/**"
+		],
+		"win": {
+			"target": "nsis",
+			"icon": "assets/icon.ico"
+		},
+		"mac": {
+			"target": "dmg",
+			"icon": "assets/icon.icns"
+		},
+		"linux": {
+			"target": "AppImage",
+			"icon": "assets/icon.png"
+		},
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "codeacioustech",
+				"repo": "opl-digikey-app"
+			}
+		]
+	}
+}
