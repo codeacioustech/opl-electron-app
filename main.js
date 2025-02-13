@@ -17,13 +17,15 @@ app.whenReady().then(async () => {
 		const ico = process.platform === 'win32' ? 'ico' : process.platform === 'darwin' ? 'png' : 'png';
 		const iconPath = path.join((__dirname), 'assets', 'scraping.' + ico);
 
-		app.dock.setIcon(iconPath)
+		if (process.platform === 'darwin') app.dock.setIcon(iconPath)
 
 		await storage.set({'VERSION': app.getVersion()})
 
 		session.defaultSession.on('will-download', onDownload)
 
-		await createMainWindow()
+		const win = await createMainWindow()
+
+		if (process.platform !== 'darwin') win.setIcon(iconPath)
 	} catch (e) {
 		console.error('Error during app initialization: ', e)
 	}
