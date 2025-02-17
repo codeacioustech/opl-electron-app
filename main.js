@@ -33,5 +33,5 @@ app.whenReady().then(async () => {
 
 app.on('window-all-closed', () => app.quit())
 
-// Check for update every 2 hrs
-checkForUpdates().finally(() => setInterval(checkForUpdates, 2 * 60 * 60 * 1000))
+// Check for update every 10 minutes
+checkForUpdates().finally(() => setInterval(checkForUpdates, 10 * 60 * 1000))

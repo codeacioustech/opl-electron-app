@@ -1,6 +1,6 @@
 {
 	"name": "opl-electron-app",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"main": "main.js",
 	"description": "OPL Desktop App",
 	"author": {
@@ -44,7 +44,12 @@
 			"icon": "assets/scraping.ico"
 		},
 		"mac": {
-			"target": "dmg",
+			"target": [
+				{
+					"target": "dmg",
+					"arch": "universal"
+				}
+			],
 			"icon": "assets/scraping.icns"
 		},
 		"linux": {
